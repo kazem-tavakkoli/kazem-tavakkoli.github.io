@@ -7,21 +7,29 @@
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Vazir&display=swap');
 
+    * {
+      box-sizing: border-box;
+    }
+
     body {
       font-family: 'Vazir', sans-serif;
       background: linear-gradient(to bottom, #f0f4f8, #d9e2ec);
       margin: 0;
-      padding: 20px;
+      padding: 0;
       direction: rtl;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
     }
 
     .container {
       max-width: 550px;
       background-color: #ffffff;
-      margin: auto;
       padding: 30px 25px;
       border-radius: 20px;
       box-shadow: 0 12px 30px rgba(0, 0, 0, 0.1);
+      text-align: right;
     }
 
     .title {
@@ -64,13 +72,15 @@
     .map-link {
       display: block;
       text-align: center;
-      margin: 20px 0;
+      margin: 20px auto;
       background-color: #16a085;
       color: white;
       padding: 10px 20px;
       border-radius: 12px;
       text-decoration: none;
+      width: fit-content;
       transition: background 0.3s;
+      cursor: pointer;
     }
 
     .map-link:hover {
@@ -92,6 +102,45 @@
 
     .social-icons a:hover {
       color: #16a085;
+    }
+
+    /* Simple modal */
+    .modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background-color: rgba(0,0,0,0.5);
+      justify-content: center;
+      align-items: center;
+      z-index: 999;
+    }
+
+    .modal-content {
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 14px;
+      text-align: center;
+      width: 90%;
+      max-width: 400px;
+    }
+
+    .modal-content h3 {
+      margin-bottom: 20px;
+    }
+
+    .modal-content a {
+      display: block;
+      padding: 10px;
+      margin: 10px 0;
+      background-color: #16a085;
+      color: white;
+      text-decoration: none;
+      border-radius: 8px;
+      transition: background 0.3s;
+    }
+
+    .modal-content a:hover {
+      background-color: #138d75;
     }
   </style>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
@@ -121,9 +170,7 @@
       <span><span class="info-label">ساعات کاری:</span> هر روز از ۹ صبح تا ۹ شب (جمعه تعطیل)</span>
     </div>
 
-    <a href="https://maps.google.com/?q=35.6892,51.3890" class="map-link" target="_blank">
-      مشاهده موقعیت در نقشه
-    </a>
+    <a id="mapLink" class="map-link">مشاهده موقعیت در نقشه</a>
 
     <div class="social-icons">
       <a href="https://www.instagram.com/iranintltv" target="_blank" title="اینستاگرام">
@@ -138,5 +185,21 @@
     </div>
   </div>
 
+
+  <script>
+    const lat = 35.6892;
+    const lng = 51.3890;
+    const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+    const mapLink = document.getElementById('mapLink');
+  
+    if (isMobile) {
+      // در موبایل: از geo: استفاده کن برای باز شدن با اپ‌های نصب‌شده
+      mapLink.href = `geo:${lat},${lng}`;
+    } else {
+      // در کامپیوتر: از گوگل مپ استفاده کن
+      mapLink.href = `https://www.google.com/maps/search/?api=1&query=${lat},${lng}`;
+      mapLink.target = "_blank"; // توی تب جدید باز شه
+    }
+  </script>
 </body>
 </html>
